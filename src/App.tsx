@@ -12,10 +12,20 @@ import {
   Button,
 } from "@mui/material";
 
+import { useTheme } from "@mui/material/styles";
+
+import FirstPageIcon from "@mui/icons-material/FirstPage";
+import LastPageIcon from "@mui/icons-material/LastPage";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-function App() {
+import { IconButton, Tooltip } from "@mui/material";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+
+function App({ toggleMode }: { toggleMode: () => void }) {
+  const theme = useTheme();
+
   const [testnets, setTestnets] = useState<Testnet[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -70,6 +80,10 @@ function App() {
     fetchTestnets();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
+
   const filtered = testnets.filter((net) =>
     net.name.toLowerCase().includes(search.toLowerCase())
   );
@@ -79,15 +93,53 @@ function App() {
 
   return (
     <Box
-      minHeight="100vh"
       display="flex"
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      bgcolor="#fafafa"
+      sx={{
+        minHeight: "100vh",
+        background:
+          theme.palette.mode === "dark"
+            ? "linear-gradient(to bottom, #0f0f0f, #1a1a1a)"
+            : "linear-gradient(to bottom, #ffffff, #f5f7fa)",
+        color: theme.palette.text.primary,
+        transition: "background 0.5s ease",
+      }}
     >
-      <Container maxWidth="md" sx={{ py: 4 }}>
-        <Typography variant="h4" gutterBottom align="center">
+      <Container
+        maxWidth="md"
+        sx={{
+          py: 6,
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Box display="flex" justifyContent="flex-end" p={2}>
+          <Tooltip title="Toggle Dark Mode">
+            <IconButton onClick={toggleMode} color="inherit">
+              {theme.palette.mode === "dark" ? (
+                <LightModeIcon
+                  sx={{
+                    transition: "transform 0.3s",
+                    transform: "rotate(0deg)",
+                  }}
+                />
+              ) : (
+                <DarkModeIcon
+                  sx={{
+                    transition: "transform 0.3s",
+                    transform: "rotate(180deg)",
+                  }}
+                />
+              )}
+            </IconButton>
+          </Tooltip>
+        </Box>
+
+        <Typography variant="h3" fontWeight={600} gutterBottom align="center">
           🧪 Testnet Explorer
         </Typography>
 
@@ -127,13 +179,18 @@ function App() {
           justifyContent="center"
           alignItems="center"
           mt={4}
-          gap={2}
+          gap={1}
         >
+          <Button onClick={() => setPage(1)} disabled={page === 1}>
+            <FirstPageIcon fontSize="large" />
+          </Button>
+
           <Button
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}
-            startIcon={<ArrowBackIosIcon />}
-          ></Button>
+          >
+            <ArrowBackIosIcon />
+          </Button>
 
           <Typography variant="body2">
             Page {page} of {totalPages}
@@ -142,8 +199,16 @@ function App() {
           <Button
             onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={page === totalPages}
-            endIcon={<ArrowForwardIosIcon />}
-          ></Button>
+          >
+            <ArrowForwardIosIcon />
+          </Button>
+
+          <Button
+            onClick={() => setPage(totalPages)}
+            disabled={page === totalPages}
+          >
+            <LastPageIcon fontSize="large" />
+          </Button>
         </Box>
       </Container>
 

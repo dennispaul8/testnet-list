@@ -44,8 +44,20 @@ const TestnetCard: React.FC<Props> = ({ testnet }) => {
   };
 
   return (
-    <Card sx={{ marginBottom: 2 }}>
-      <CardContent>
+    <Card
+      sx={{
+        mb: 2,
+        height: "100%",
+        maxHeight: 280, // Adjust based on content
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        borderRadius: 2,
+        boxShadow: 2,
+        overflow: "hidden",
+      }}
+    >
+      <CardContent sx={{ flex: "1 1 auto", overflowY: "auto" }}>
         <Box display="flex" alignItems="center" gap={1} mb={1}>
           {testnet.logoUrl && (
             <img
@@ -55,50 +67,64 @@ const TestnetCard: React.FC<Props> = ({ testnet }) => {
               onError={(e) => (e.currentTarget.style.display = "none")}
             />
           )}
-          <Typography variant="h6">{testnet.name}</Typography>
+          <Typography variant="h6" noWrap>
+            {testnet.name}
+          </Typography>
         </Box>
 
         <Box display="flex" flexDirection="column" gap={0.5}>
-          <Typography variant="body2">
+          <Typography variant="body2" noWrap>
             <strong>Chain ID:</strong> {testnet.chainId}
           </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" noWrap>
             <strong>Currency:</strong> {testnet.currency}
           </Typography>
-          <Typography variant="body2">
+          <Typography
+            variant="body2"
+            sx={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
             <strong>RPC:</strong>{" "}
             <MuiLink href={testnet.rpc} target="_blank" rel="noopener">
               {testnet.rpc}
             </MuiLink>
           </Typography>
-          <Typography variant="body2">
+          <Typography
+            variant="body2"
+            sx={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
             <strong>Explorer:</strong>{" "}
             <MuiLink href={testnet.explorer} target="_blank" rel="noopener">
               {testnet.explorer}
             </MuiLink>
           </Typography>
         </Box>
-
-        <Box
-          mt={2}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Chip
-            label={testnet.status}
-            color={testnet.status === "active" ? "success" : "default"}
-            size="small"
-          />
-          <Button
-            variant="contained"
-            size="small"
-            onClick={handleAddToMetaMask}
-          >
-            Add to MetaMask
-          </Button>
-        </Box>
       </CardContent>
+
+      <Box
+        p={2}
+        pt={1}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        borderTop="1px solid #eee"
+      >
+        <Chip
+          label={testnet.status}
+          color={testnet.status === "active" ? "success" : "default"}
+          size="small"
+        />
+        <Button variant="contained" size="small" onClick={handleAddToMetaMask}>
+          Add to MetaMask
+        </Button>
+      </Box>
     </Card>
   );
 };
