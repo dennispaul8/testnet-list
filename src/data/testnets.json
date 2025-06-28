@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Sepolia",
+    "chainId": 11155111,
+    "rpc": "https://rpc.sepolia.org",
+    "explorer": "https://sepolia.etherscan.io",
+    "currency": "ETH",
+    "status": "active"
+  },
+  {
+    "name": "Mumbai",
+    "chainId": 80001,
+    "rpc": "https://rpc-mumbai.matic.today",
+    "explorer": "https://mumbai.polygonscan.com",
+    "currency": "MATIC",
+    "status": "active"
+  },
+  {
+    "name": "Goerli",
+    "chainId": 5,
+    "rpc": "https://rpc.goerli.linea.build",
+    "explorer": "https://goerli.etherscan.io",
+    "currency": "ETH",
+    "status": "deprecated"
+  }
+]
