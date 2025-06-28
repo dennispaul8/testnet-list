@@ -46,9 +46,17 @@ const TestnetCard: React.FC<Props> = ({ testnet }) => {
   return (
     <Card sx={{ marginBottom: 2 }}>
       <CardContent>
-        <Typography variant="h6" gutterBottom>
-          {testnet.name}
-        </Typography>
+        <Box display="flex" alignItems="center" gap={1} mb={1}>
+          {testnet.logoUrl && (
+            <img
+              src={testnet.logoUrl}
+              alt={`${testnet.name} logo`}
+              style={{ width: 24, height: 24 }}
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+          )}
+          <Typography variant="h6">{testnet.name}</Typography>
+        </Box>
 
         <Box display="flex" flexDirection="column" gap={0.5}>
           <Typography variant="body2">

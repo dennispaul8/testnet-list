@@ -5,4 +5,5 @@ export interface Testnet {
   explorer: string;
   currency: string;
   status: "active" | "deprecated" | "unknown";
+  logoUrl?: string; // <- Add this
 }
