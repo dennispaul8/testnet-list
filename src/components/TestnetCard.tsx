@@ -1,5 +1,13 @@
 import React from "react";
 import type { Testnet } from "../types/Testnet";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Link as MuiLink,
+  Box,
+  Chip,
+} from "@mui/material";
 
 interface Props {
   testnet: Testnet;
@@ -7,47 +15,45 @@ interface Props {
 
 const TestnetCard: React.FC<Props> = ({ testnet }) => {
   return (
-    <div
-      style={{
-        border: "1px solid #ddd",
-        borderRadius: "8px",
-        padding: "1rem",
-        marginBottom: "1rem",
-        background: "#f9f9f9",
-        color: "black",
-      }}
-    >
-      <h2>{testnet.name}</h2>
-      <p>
-        <strong>Chain ID:</strong> {testnet.chainId}
-      </p>
-      <p>
-        <strong>Currency:</strong> {testnet.currency}
-      </p>
-      <p>
-        <strong>RPC:</strong>{" "}
-        <a href={testnet.rpc} target="_blank" rel="noopener noreferrer">
-          {testnet.rpc}
-        </a>
-      </p>
-      <p>
-        <strong>Explorer:</strong>{" "}
-        <a href={testnet.explorer} target="_blank" rel="noopener noreferrer">
-          {testnet.explorer}
-        </a>
-      </p>
-      <p>
-        <strong>Status:</strong>{" "}
-        <span
-          style={{
-            color: testnet.status === "active" ? "green" : "red",
-            fontWeight: "bold",
-          }}
-        >
-          {testnet.status}
-        </span>
-      </p>
-    </div>
+    <Card sx={{ marginBottom: 2 }}>
+      <CardContent>
+        <Typography variant="h6" gutterBottom>
+          {testnet.name}
+        </Typography>
+
+        <Box display="flex" flexDirection="column" gap={0.5}>
+          <Typography variant="body2">
+            <strong>Chain ID:</strong> {testnet.chainId}
+          </Typography>
+
+          <Typography variant="body2">
+            <strong>Currency:</strong> {testnet.currency}
+          </Typography>
+
+          <Typography variant="body2">
+            <strong>RPC:</strong>{" "}
+            <MuiLink href={testnet.rpc} target="_blank" rel="noopener">
+              {testnet.rpc}
+            </MuiLink>
+          </Typography>
+
+          <Typography variant="body2">
+            <strong>Explorer:</strong>{" "}
+            <MuiLink href={testnet.explorer} target="_blank" rel="noopener">
+              {testnet.explorer}
+            </MuiLink>
+          </Typography>
+
+          <Box mt={1}>
+            <Chip
+              label={testnet.status}
+              color={testnet.status === "active" ? "success" : "default"}
+              size="small"
+            />
+          </Box>
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
 
