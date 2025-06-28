@@ -4,5 +4,5 @@ export interface Testnet {
   rpc: string;
   explorer: string;
   currency: string;
-  status: "active" | "deprecated";
+  status: "active" | "deprecated" | "unknown";
 }
